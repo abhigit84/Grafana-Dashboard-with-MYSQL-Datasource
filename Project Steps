@@ -1,0 +1,62 @@
+Amazon Linux ec2
+any region
+
+
+sudo su
+yum install docker
+
+systemctl start docker
+
+systemctl enable docker
+
+Install Grafana as docker container:-
+
+docker run -d --name=grafana -p 3001:3000 -v grafana_config:/etc/grafana -v grafana_data:/var/lib/grafana -v grafana_logs:/var/log/grafana grafana/grafana
+
+Give password admin:admin and replace to new
+password(welcome)
+
+Install MySql as docker container:-
+
+docker run -d --name mysqldb -p 3306:3306 -v db_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=password mysql:latest
+
+docker exec -it mysqldb bash
+mysql -u root -p 
+password
+show databases;
+create database team;
+USE team;
+CREATE TABLE person ( person_id INT NOT NULL
+PRIMARY KEY, fname VARCHAR(40) NULL, lname
+VARCHAR(40) NULL, age INT NOT NULL, created
+TIMESTAMP );
+Show tables;
+Insert the Data in Mysql DB
+INSERT INTO person (person_id, fname, lname, age)
+VALUES (1,'Peter','Engineer', 32);
+INSERT INTO person (person_id, fname, lname, age)
+VALUES (2, 'Richard', 'Gaol', 27);
+INSERT INTO person (person_id, fname, lname, age)
+VALUES (3, 'Howard', 'Ken', 38);
+INSERT INTO person (person_id, fname, lname, age)
+VALUES (4, 'Lucy', 'Dey', 32);
+
+
+
+On Grafana Dashboard-Data source-add data source-my sql-
+host url-54.242.89.62:3306
+dont put like localhost or like http://ip:3306 it will not connect
+
+db name:team
+username:root
+password:password
+Save and Test-Ok
+
+Note:default password for root user in Mysql is password.
+
+Dashboard-New dashboard-Add visualization-Then close this visualization-Then panel will appear-You can put any query name-select data source-MYSQL-Dataset-select db name-team-table-person-
+Click on Code(besides Run query)-write query here-select * from team.person;
+Click on Run query
+Slide and on table view to see output.
+
+
